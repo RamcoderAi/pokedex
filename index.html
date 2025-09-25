@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Pokédex</title>
+  <link rel="stylesheet" href="style.css">  
+
+</head>
+<body>
+  <h1>Pokédex</h1>
+
+    <!-- Search tools -->
+    <div class="toolbar">
+    <div class="search-wrap">
+      <input id="searchInput" type="text" placeholder="Search by name (pikachu) or ID (25)..." />
+      <button id="searchBtn">Search 🔎</button>
+      <span id="status" class="muted"></span>
+      <ul id="suggestions" style="display:none"></ul>
+    </div>
+      </div>
+
+  <div id="pokedex-container">
+    <!-- Pokémon cards will be injected here by JavaScript -->
+  </div>
+
+  <div class="buttons">
+    <button id="firstBtn">First Pokemon</button>
+    <button id="prevBtn">⬅️ Previous Pokemon</button>
+    <button id="nextBtn">Next Pokemon➡️</button>
+    <button id="lastBtn">Last Pokemon</button>
+  </div>
+
+ <script src="script.js"></script>
+ 
+</body>
+</html>
