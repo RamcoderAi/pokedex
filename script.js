@@ -75,6 +75,26 @@
       activeSuggestionIndex = -1;
     }
 
+    function updateFirstButton() {
+  // Disable if the currentPokemonId is 2 or less (centered at the start)
+  const firstBtn = document.getElementById("firstBtn");
+  if (currentPokemonId <= 2) {
+    firstBtn.disabled = true;
+  } else {
+    firstBtn.disabled = false;
+  }
+}
+
+function updatePrevButton() {
+  // Disable if the currentPokemonId is 2 or less (centered at the start)
+  const prevBtn = document.getElementById("prevBtn");
+  if (currentPokemonId <= 2) {
+    prevBtn.disabled = true;
+  } else {
+    prevBtn.disabled = false;
+  }
+}
+
 // Show three Pokémon: either by center ID or by an array of IDs
 async function showThreePokemon(centerOrIds) {
   let ids;
@@ -138,6 +158,8 @@ async function showThreePokemon(centerOrIds) {
   if (!foundAny) {
     container.innerHTML = `<div class="error">No Pokémon found for this ID.</div>`;
   }
+   updateFirstButton();
+   updatePrevButton();
 }
 
   // Initial Pokémon
@@ -180,11 +202,16 @@ document.getElementById("firstBtn").addEventListener("click", () => {
 });
 
 document.getElementById("lastBtn").addEventListener("click", () => {
-  // Get the last three Pokémon from the list
+  // 1. Get the last three Pokémon from your list
   const lastThree = allPokemon.slice(-3);
+  // 2. If there are less than three, just use what you have
   if (lastThree.length === 0) return;
-  // Pass their actual IDs to showThreePokemon
-  showThreePokemon(lastThree.map(p => p.id));
+  // 3. Make a list of their IDs
+  const ids = lastThree.map(p => p.id);
+  // 4. Set the currentPokemonId to the middle one (for navigation)
+  currentPokemonId = ids[Math.floor(ids.length / 2)];
+  // 5. Show those three Pokémon
+  showThreePokemon(ids);
 });
 
 
@@ -292,7 +319,10 @@ document.getElementById("searchBtn").addEventListener("click", () => {
     }
 
     // ---------- Boot ----------
-    (async function init() {
-      await preloadNames();    // load names for fuzzy search
-      await showThreePokemon(currentPokemonId); // show three Pokémon first
-    })();
+  (async function init() {
+  await preloadNames();    // load names for fuzzy search
+  document.getElementById("lastBtn").disabled = false; // Enable Last button
+  await showThreePokemon(currentPokemonId); // show three Pokémon first
+   updateFirstButton();
+   updatePrevButton();
+})();
